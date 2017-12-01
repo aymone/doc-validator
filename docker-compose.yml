@@ -6,8 +6,8 @@ web:
   volumes:
       - ./:/opt/document-validator
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-  # links:
-      # - node/go
+  links:
+      - app
 
 app:
   container_name: dv-app
