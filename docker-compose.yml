@@ -1,0 +1,28 @@
+web:
+  image: nginx:alpine
+  build: ./docker/nginx
+  container_name: dv-nginx
+  ports:
+      - "8080:80"
+  volumes:
+      - ./:/opt/document-validator
+      - ./site.conf:/etc/nginx/conf.d/site.conf
+  # links:
+      # - node/go
+
+mongodb:
+  container_name: dv-mongodb
+  image: mongo:3.4.10-jessie
+  environment:
+    - MONGO_DATA_DIR=/data/db
+    - MONGO_LOG_DIR=/dev/null
+  ports:
+    - "27017:27017"
+  volumes_from:
+    - data_volumes
+
+data_volumes:
+  container_name: dv-data-volumes
+  image: tianon/true
+  volumes:
+    - /data/db
