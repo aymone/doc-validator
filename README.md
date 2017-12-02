@@ -17,6 +17,17 @@ Stop containers
 $ make stop
 ```
 
+Read logs from containers
+```bash
+$ make logs
+```
+
+Update dependencies on containers
+```bash
+$ make deps
+```
+
+
 ## Requirements
 
 [Docker](https://www.docker.com/)
