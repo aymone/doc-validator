@@ -43,5 +43,6 @@ func requestHandler(h http.Handler) http.Handler {
 func router() *httprouter.Router {
 	router := httprouter.New()
 	router.GET("/status", StatusHandler)
+	router.POST("/validate", ValidateHandler)
 	return router
 }

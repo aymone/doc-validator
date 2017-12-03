@@ -97,7 +97,7 @@ func (v *validatorContext) calculateNumbersAndDigits() error {
 	}
 
 	module := totalSum % 11
-	if module <= 2 {
+	if module < 2 {
 		v.digits = append(v.digits, 0)
 	} else {
 		v.digits = append(v.digits, (11 - module))
