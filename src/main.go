@@ -9,7 +9,16 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var serverInfo *ServerInfo
+
 func main() {
+	log.SetOutput(os.Stdout)
+	log.SetPrefix("[Document-validator]")
+	serverInfo = &ServerInfo{}
+	serverInfo.init()
+
+	log.Printf("Server starting at %s", serverInfo.getStartedAt())
+
 	port, exist := os.LookupEnv("PORT")
 	if !exist {
 		log.Fatal("Undefined env: PORT")
@@ -31,14 +40,8 @@ func requestHandler(h http.Handler) http.Handler {
 	})
 }
 
-func PingHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("pong\n"))
-}
-
 func router() *httprouter.Router {
 	router := httprouter.New()
-	router.GET("/ping", PingHandler)
+	router.GET("/status", StatusHandler)
 	return router
 }
