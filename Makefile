@@ -17,3 +17,7 @@ logs:
 .PHONY: deps
 deps:
 	docker-compose exec app go get ./...
+
+.PHONY: test
+test:
+	go test -v ./src

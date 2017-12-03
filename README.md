@@ -27,6 +27,11 @@ Update dependencies on containers
 $ make deps
 ```
 
+Running unit tests
+```bash
+$ make test
+```
+
 
 ## Requirements
 
