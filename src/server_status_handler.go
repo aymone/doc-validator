@@ -14,7 +14,7 @@ type ServerStatus struct {
 	Requests  int    `json:"requests"`
 }
 
-func StatusHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func ServerStatusHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	serverInfo.setCounter()
 
 	status := ServerStatus{

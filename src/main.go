@@ -42,7 +42,11 @@ func requestHandler(h http.Handler) http.Handler {
 
 func router() *httprouter.Router {
 	router := httprouter.New()
-	router.GET("/status", StatusHandler)
-	router.POST("/validate", ValidateHandler)
+	router.GET("/status", ServerStatusHandler)
+	router.POST("/documents/validate", DocumentValidateHandler)
+	router.POST("/documents", DocumentCreateHandler)
+	router.PUT("/documents/:documentNumber/blacklist/:status", DocumentBlacklistHandler)
+	router.GET("/documents/:documentNumber", DocumentReadHandler)
+	// router.DELETE("/documents/:documentNumber", DocumentDeleteHandler)
 	return router
 }

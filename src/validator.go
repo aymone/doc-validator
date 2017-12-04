@@ -8,10 +8,10 @@ import (
 )
 
 const (
-	Cpf     = "cpf"
+	Cpf     = "CPF"
 	CpfSize = 11
 
-	Cnpj     = "cnpj"
+	Cnpj     = "CNPJ"
 	CnpjSize = 14
 )
 
