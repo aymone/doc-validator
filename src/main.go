@@ -43,10 +43,13 @@ func requestHandler(h http.Handler) http.Handler {
 func router() *httprouter.Router {
 	router := httprouter.New()
 	router.GET("/status", ServerStatusHandler)
-	router.POST("/documents/validate", DocumentValidateHandler)
-	router.POST("/documents", DocumentCreateHandler)
-	router.PUT("/documents/:documentNumber/blacklist/:status", DocumentBlacklistHandler)
+	router.GET("/documents", DocumentReadAllHandler)
 	router.GET("/documents/:documentNumber", DocumentReadHandler)
+
+	router.POST("/documents", DocumentCreateHandler)
+	router.POST("/documents/validate", DocumentValidateHandler)
+
+	router.PUT("/documents/:documentNumber/blacklist/:status", DocumentBlacklistHandler)
 	// router.DELETE("/documents/:documentNumber", DocumentDeleteHandler)
 	return router
 }
