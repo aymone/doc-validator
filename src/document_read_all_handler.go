@@ -12,11 +12,23 @@ import (
 func DocumentReadAllHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	serverInfo.setCounter()
 
-	filter := r.URL.Query().Get("filter")
-	filters := bson.M{"_id": bson.RegEx{Pattern: filter, Options: ""}}
-
 	var docs []document
-	if err := getClient().C("documents").Find(filters).All(&docs); err != nil {
+
+	filters := bson.M{}
+	if filter := r.URL.Query().Get("filter"); filter != "" {
+		filters["_id"] = bson.RegEx{Pattern: filter, Options: ""}
+	}
+
+	var sorters []string
+	if sorter := r.URL.Query().Get("sort"); sorter != "" {
+		if sorter == "documentNumber" {
+			sorter = "_id"
+		}
+
+		sorters = append(sorters, sorter)
+	}
+
+	if err := getClient().C("documents").Find(filters).Sort(sorters...).All(&docs); err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Error on get documents", http.StatusNotFound)
 		return
