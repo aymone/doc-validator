@@ -8,28 +8,17 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-type ValidateRequest struct {
+type ValidateResponse struct {
 	DocumentNumber string `json:"documentNumber"`
 	IsValid        bool   `json:"isValid"`
 	Variety        string `json:"type"`
 }
 
-func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 
-	var v ValidateRequest
-
-	d := json.NewDecoder(r.Body)
-	defer r.Body.Close()
-
-	err := d.Decode(&v)
-	if err != nil {
-		log.Println("Error on decode request")
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	c, err := validate(v.DocumentNumber)
+	docID := p.ByName("documentNumber")
+	c, err := validate(docID)
 	if err != nil {
 		log.Println("Error on validate responses:")
 		log.Println(err)
@@ -37,8 +26,11 @@ func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, _ httproute
 		return
 	}
 
-	v.Variety = c.variety
-	v.IsValid = true
+	v := ValidateResponse{
+		DocumentNumber: c.input,
+		Variety:        c.variety,
+		IsValid:        true,
+	}
 
 	if err := json.NewEncoder(w).Encode(v); err != nil {
 		log.Println("Error on encode responses:")

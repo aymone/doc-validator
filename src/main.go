@@ -51,7 +51,7 @@ func router() *httprouter.Router {
 	router.GET("/documents/:documentNumber", DocumentReadHandler)
 
 	router.POST("/documents", DocumentCreateHandler)
-	router.POST("/documents/validate", DocumentValidateHandler)
+	router.GET("/documents/:documentNumber/validate", DocumentValidateHandler)
 
 	router.PUT("/documents/:documentNumber/blacklist/:status", DocumentBlacklistHandler)
 	router.DELETE("/documents/:documentNumber", DocumentDeleteHandler)
