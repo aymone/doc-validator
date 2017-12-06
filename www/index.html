@@ -1,17 +1,101 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="App" class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Document Validator</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app/app.css">
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-
 <body>
-  <h1>Document Validator</h1>
-  <h2>The ultimate tool for manage documents</h2>
-</body>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
 
+  <div ng-controller="AppController as vm" class="container">
+
+    <h1>Document validator</h1>
+
+    <div class="controllers">
+        <input type="text"
+                name="filter"
+                ng-model="vm.input"
+                ng-change="vm.get()"
+                angular-mask="000.000.000-00|00.000.000/0000-00"
+                ng-class="vm.valid ? 'valid-text' : 'invalid-text'">
+
+        <input type="button" value="Clear" ng-click="vm.cleanFilter()">
+        <input type="button" value="Create" ng-click="vm.create()">
+    </div>
+
+    <div>
+      <table>
+        <tr>
+          <thead>
+            <th>
+              <a ng-click="vm.setSorter('blacklisted')" href="">
+                Blacklisted
+              </a>
+            </th>
+            <th>
+              <a ng-click="vm.setSorter('documentNumber')" href="">
+                Document number
+              </a>
+            </th>
+            <th>
+              <a ng-click="vm.setSorter('variety')" href="">
+                Document variety
+              </a>
+            </th>
+            <th>
+              <a ng-click="vm.setSorter('createdAt')" href="">
+                CreatedAt
+              </a>
+            </th>
+            <th>
+              <a ng-click="vm.setSorter('updatedAt')" href="">
+                UpdatedAt
+              </a>
+            </th>
+            <th>Delete</th>
+          </thead>
+        </tr>
+        <tr>
+          <tbody ng-repeat="d in vm.documents | filter:vm.input">
+            <td>
+              <input type="checkbox"
+                      ng-change="vm.blacklist(d.documentNumber, d.blacklisted)"
+                      ng-model="d.blacklisted" />
+            </td>
+            <td>{{d.documentNumber}}</td>
+            <td>{{d.variety}}</td>
+            <td>{{d.createdAt}}</td>
+            <td>{{d.updatedAt}}</td>
+            <td>
+                <button type="button" ng-click="vm.del(d.documentNumber)">
+                    X
+                </button>
+            </td>
+          </tbody>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src='bower_components/angular-input-mask/src/angular-simple-mask.js'></script>
+  <script src="app/app.js"></script>
+</body>
 </html>

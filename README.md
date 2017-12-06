@@ -2,9 +2,9 @@
 
 ## Getting Started
 
-Build project and install deps
+First run (Install)
 ```bash
-$ make build
+$ make install
 ```
 
 Up containers and run project
@@ -32,8 +32,9 @@ Running unit tests
 $ make test
 ```
 
-
 ## Requirements
 
 [Docker](https://www.docker.com/)
 [Docker compose](https://docs.docker.com/compose/install/)
+
+### References

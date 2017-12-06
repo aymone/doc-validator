@@ -1,14 +1,18 @@
-.PHONY: up
-up:
-	docker-compose up -d
+.PHONY: install
+install: up
+	npm --prefix ./www i
 
-.PHONY: stop
-stop:
-	docker-compose stop
+.PHONY: up
+up: build
+	docker-compose up -d
 
 .PHONY: build
 build:
 	docker-compose build
+
+.PHONY: stop
+stop:
+	docker-compose stop
 
 .PHONY: logs
 logs:
@@ -21,3 +25,8 @@ deps:
 .PHONY: test
 test:
 	go test -v ./src
+
+.PHONY: full-test
+full-test:
+	go test -v ./src
+	npm --prefix ./www run test-single-run

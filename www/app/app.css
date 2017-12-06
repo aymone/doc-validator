@@ -1,0 +1,46 @@
+div.container {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+}
+
+div.controllers {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  text-align: center;
+  padding: 8px;
+}
+
+th {
+  border: 1px solid #f0f0f0;
+}
+
+td {
+  border: 1px solid #ffffff;
+  background-color: #f0f0f0;
+}
+
+input[type=text].invalid-text {
+  background-color: rgb(236, 150, 169);
+  border: 1px solid red;
+  border-radius: 4px;
+}
+
+input[type=text].valid-text {
+  background-color: rgb(180, 233, 128);
+  border: 1px solid greenyellow;
+  border-radius: 4px;
+}
+
