@@ -20,7 +20,7 @@ func DocumentReadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Pa
 	}
 
 	var doc document
-	if err := doc.read(); err != nil {
+	if err := getClient().C("documents").FindId(docID).One(&doc); err != nil {
 		log.Error(err.Error())
 		http.Error(w, "Error on get document", http.StatusNotFound)
 		return
@@ -31,8 +31,4 @@ func DocumentReadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Pa
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-}
-
-func (d *document) read() error {
-	return getClient().C("documents").FindId(d.ID).One(&d)
 }
