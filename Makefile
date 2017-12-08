@@ -26,7 +26,10 @@ deps:
 test:
 	go test -v ./src
 
+.PHONY: docker-test-acceptance
+docker-test-acceptance:
+	docker-compose exec app go test -v -tags=acceptance
+
 .PHONY: full-test
-full-test:
-	go test -v ./src
+full-test: docker-test-acceptance
 	npm --prefix ./www run test-single-run
