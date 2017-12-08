@@ -5,6 +5,10 @@ import (
 	"time"
 )
 
+type documentRequest struct {
+	ID string `json:"documentNumber"`
+}
+
 // document represents mongodb collection model
 type document struct {
 	ID          string    `bson:"_id,omitempty" json:"documentNumber"`
@@ -30,12 +34,4 @@ func (d *document) setStatus(status string) error {
 	d.UpdatedAt = time.Now()
 
 	return nil
-}
-
-func (d *document) create() error {
-	return getClient().C("documents").Insert(&d)
-}
-
-func (d *document) read() error {
-	return getClient().C("documents").FindId(d.ID).One(&d)
 }

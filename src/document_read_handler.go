@@ -11,16 +11,16 @@ import (
 func DocumentReadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 
-	var doc document
-	doc.ID = p.ByName("documentNumber")
+	docID := p.ByName("documentNumber")
 
-	_, err := validate(doc.ID)
+	_, err := validate(docID)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
+	var doc document
 	if err := doc.read(); err != nil {
 		log.Println(err.Error())
 		http.Error(w, "Error on get document", http.StatusNotFound)
@@ -32,4 +32,8 @@ func DocumentReadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Pa
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func (d *document) read() error {
+	return getClient().C("documents").FindId(d.ID).One(&d)
 }

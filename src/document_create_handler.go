@@ -13,10 +13,9 @@ import (
 func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	serverInfo.setCounter()
 
-	var doc document
-
+	var docR documentRequest
 	d := json.NewDecoder(r.Body)
-	err := d.Decode(&doc)
+	err := d.Decode(&docR)
 	if err != nil {
 		log.Println("Error on decode request")
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -24,7 +23,7 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 	}
 	defer r.Body.Close()
 
-	c, err := validate(doc.ID)
+	c, err := validate(docR.ID)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -32,11 +31,12 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 	}
 
 	createdAt := time.Now()
-
-	doc.ID = c.input
-	doc.Variety = c.variety
-	doc.CreatedAt = createdAt
-	doc.UpdatedAt = createdAt
+	doc := document{
+		ID:        c.input,
+		Variety:   c.variety,
+		CreatedAt: createdAt,
+		UpdatedAt: createdAt,
+	}
 
 	if err := doc.create(); err != nil {
 		log.Println(err.Error())
@@ -55,4 +55,8 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func (d *document) create() error {
+	return getClient().C("documents").Insert(&d)
 }
