@@ -2,22 +2,25 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/julienschmidt/httprouter"
 )
 
 var serverInfo *ServerInfo
+var log *logrus.Logger
 
 func main() {
-	log.SetOutput(os.Stdout)
-	log.SetPrefix("[Document-validator]")
+	log = logrus.New()
+	log.Out = os.Stdout
+	log.Formatter = &logrus.JSONFormatter{}
+
 	serverInfo = &ServerInfo{}
 	serverInfo.init()
 
-	log.Printf("Server starting at %s", serverInfo.getStartedAt())
+	log.Info("Server starting at %s", serverInfo.getStartedAt())
 
 	port, exist := os.LookupEnv("PORT")
 	if !exist {

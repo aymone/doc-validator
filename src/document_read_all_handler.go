@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -29,13 +28,13 @@ func DocumentReadAllHandler(w http.ResponseWriter, r *http.Request, _ httprouter
 	}
 
 	if err := getClient().C("documents").Find(filters).Sort(sorters...).All(&docs); err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		http.Error(w, "Error on get documents", http.StatusNotFound)
 		return
 	}
 
 	if err := json.NewEncoder(w).Encode(docs); err != nil {
-		log.Println("Error on encode responses")
+		log.Error("Error on encode responses")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

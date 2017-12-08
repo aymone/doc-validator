@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -15,7 +14,7 @@ func DocumentBlacklistHandler(w http.ResponseWriter, r *http.Request, p httprout
 
 	_, err := validate(docID)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -23,21 +22,21 @@ func DocumentBlacklistHandler(w http.ResponseWriter, r *http.Request, p httprout
 	var doc document
 	findErr := getClient().C("documents").FindId(docID).One(&doc)
 	if findErr != nil {
-		log.Println(findErr)
+		log.Error(findErr)
 		http.Error(w, findErr.Error(), http.StatusNotFound)
 		return
 	}
 
 	statusErr := doc.setStatus(docStatus)
 	if statusErr != nil {
-		log.Println(statusErr)
+		log.Error(statusErr)
 		http.Error(w, statusErr.Error(), http.StatusBadRequest)
 		return
 	}
 
 	updateErr := getClient().C("documents").UpdateId(docID, &doc)
 	if updateErr != nil {
-		log.Println(updateErr)
+		log.Error(updateErr)
 		http.Error(w, updateErr.Error(), http.StatusInternalServerError)
 		return
 	}

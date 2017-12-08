@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -25,7 +24,7 @@ func ServerStatusHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(status); err != nil {
-		log.Fatal("Error on encode responses")
+		log.Error("Error on encode responses")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -17,7 +16,7 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 	d := json.NewDecoder(r.Body)
 	err := d.Decode(&docR)
 	if err != nil {
-		log.Println("Error on decode request")
+		log.Error("Error on decode request")
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -25,7 +24,7 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 
 	c, err := validate(docR.ID)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -39,7 +38,7 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 	}
 
 	if err := doc.create(); err != nil {
-		log.Println(err.Error())
+		log.Error(err.Error())
 		// Errors from go-mgo client not return status codes :/
 		if strings.Contains(err.Error(), "E11000 duplicate") {
 			http.Error(w, "Duplicated document number", http.StatusConflict)
@@ -51,7 +50,7 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 	}
 
 	if err := json.NewEncoder(w).Encode(doc); err != nil {
-		log.Println("Error on encode response")
+		log.Error("Error on encode response")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

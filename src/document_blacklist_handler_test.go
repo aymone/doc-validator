@@ -6,7 +6,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"testing"
@@ -21,7 +20,7 @@ func TestDocumentBlacklistNotFound(t *testing.T) {
 	id := "88417848142"
 	url, err := url.Parse(fmt.Sprintf("%v/documents/%s/blacklist/add", host, id))
 	if err != nil {
-		log.Fatal(err)
+		t.Errorf("Unexpected error: %v", err)
 	}
 
 	req := &http.Request{
@@ -69,7 +68,7 @@ func TestDocumentBlacklistAdd(t *testing.T) {
 	id := "88417848142"
 	url, err := url.Parse(fmt.Sprintf("%v/documents/%s/blacklist/add", host, id))
 	if err != nil {
-		log.Fatal(err)
+		t.Errorf("Unexpected error: %v", err)
 	}
 
 	req := &http.Request{
@@ -96,7 +95,7 @@ func TestDocumentBlacklistRemove(t *testing.T) {
 	id := "88417848142"
 	url, err := url.Parse(fmt.Sprintf("%v/documents/%s/blacklist/remove", host, id))
 	if err != nil {
-		log.Fatal(err)
+		t.Errorf("Unexpected error: %v", err)
 	}
 
 	req := &http.Request{

@@ -6,7 +6,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"testing"
@@ -21,7 +20,7 @@ func TestDocumentDeleteNotFound(t *testing.T) {
 	id := "18243547380"
 	url, err := url.Parse(fmt.Sprintf("%v/documents/%s", host, id))
 	if err != nil {
-		log.Fatal(err)
+		t.Errorf("Unexpected error: %v", err)
 	}
 
 	req := &http.Request{
@@ -69,7 +68,7 @@ func TestDocumentDelete(t *testing.T) {
 	id := "18243547380"
 	url, err := url.Parse(fmt.Sprintf("%v/documents/%s", host, id))
 	if err != nil {
-		log.Fatal(err)
+		t.Errorf("Unexpected error: %v", err)
 	}
 
 	req := &http.Request{

@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -20,8 +19,8 @@ func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, p httproute
 	docID := p.ByName("id")
 	c, err := validate(docID)
 	if err != nil {
-		log.Println("Error on validate responses:")
-		log.Println(err)
+		log.Error("Error on validate responses:")
+		log.Error(err)
 		http.Error(w, "Error on validate responses", http.StatusBadRequest)
 		return
 	}
@@ -33,8 +32,8 @@ func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, p httproute
 	}
 
 	if err := json.NewEncoder(w).Encode(v); err != nil {
-		log.Println("Error on encode responses:")
-		log.Println(err)
+		log.Error("Error on encode responses:")
+		log.Error(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
