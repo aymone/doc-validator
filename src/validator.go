@@ -7,6 +7,9 @@ import (
 	"strconv"
 )
 
+// Constants to be used on validator
+// CpfSize and CnpjSize are used on validator.
+// Cpf and Cnpj strings are returned on validator context
 const (
 	Cpf     = "CPF"
 	CpfSize = 11
@@ -15,6 +18,8 @@ const (
 	CnpjSize = 14
 )
 
+// validatorContext are returned after validate document.
+// This contains info to be returned on validator output
 type validatorContext struct {
 	input   string
 	variety string
@@ -50,6 +55,7 @@ func (v *validatorContext) setVarietySizeAndMask() error {
 	return nil
 }
 
+// calculateNumberAndDigits checks the number digits from document
 func (v *validatorContext) calculateNumbersAndDigits() error {
 	totalSum := 0
 	baseIndex := v.size - 2
