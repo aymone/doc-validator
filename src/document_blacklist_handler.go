@@ -10,7 +10,7 @@ import (
 func DocumentBlacklistHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 
-	docID := p.ByName("documentNumber")
+	docID := p.ByName("id")
 	docStatus := p.ByName("status")
 
 	_, err := validate(docID)

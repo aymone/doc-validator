@@ -6,12 +6,12 @@ import (
 )
 
 type documentRequest struct {
-	ID string `json:"documentNumber"`
+	ID string `json:"id"`
 }
 
 // document represents mongodb collection model
 type document struct {
-	ID          string    `bson:"_id,omitempty" json:"documentNumber"`
+	ID          string    `bson:"_id,omitempty" json:"id"`
 	Variety     string    `bson:"variety" json:"variety"`
 	Blacklisted bool      `bson:"blacklisted" json:"blacklisted"`
 	CreatedAt   time.Time `bson:"createdAt" json:"createdAt"`

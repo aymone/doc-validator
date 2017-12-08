@@ -21,7 +21,7 @@ func DocumentReadAllHandler(w http.ResponseWriter, r *http.Request, _ httprouter
 
 	var sorters []string
 	if sorter := r.URL.Query().Get("sort"); sorter != "" {
-		if sorter == "documentNumber" {
+		if sorter == "id" {
 			sorter = "_id"
 		}
 

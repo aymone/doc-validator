@@ -63,18 +63,19 @@ function AppController(documentsService) {
     get();
   }
 
-  function blacklist(documentNumber, isBlackListed) {
-    return documentsService.blacklist(documentNumber, !isBlackListed);
+  function blacklist(id, isBlackListed) {
+    return documentsService.blacklist(id, !isBlackListed);
   }
 
-  function del(documentNumber) {
-    return documentsService.del(documentNumber)
+  function del(id) {
+    return documentsService.del(id)
       .then(()=> get());
   }
 
   function create() {
-    const document = {documentNumber: vm.input};
-    return documentsService.validate(document.documentNumber)
+    console.log(vm.input);
+    const document = {id: vm.input};
+    return documentsService.validate(document.id)
       .then(() => documentsService.create(document))
       .then(() => get());
   }
@@ -102,18 +103,18 @@ function documentsService($http) {
       }
       return $http.get(endpoint);
     },
-    validate(documentNumber) {
-      return $http.get(`${host}/documents/${documentNumber}/validate`, document);
+    validate(id) {
+      return $http.get(`${host}/documents/${id}/validate`, document);
     },
     create(document) {
       return $http.post(`${host}/documents`, document);
     },
-    del(documentNumber) {
-      return $http.delete(`${host}/documents/${documentNumber}`);
+    del(id) {
+      return $http.delete(`${host}/documents/${id}`);
     },
-    blacklist(documentNumber, isBlackListed) {
+    blacklist(id, isBlackListed) {
       const status = isBlackListed ? 'remove' : 'add';
-      return $http.put(`${host}/documents/${documentNumber}/blacklist/${status}`, document);
+      return $http.put(`${host}/documents/${id}/blacklist/${status}`, document);
     }
   }
 }

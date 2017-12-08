@@ -11,7 +11,7 @@ import (
 func DocumentReadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 
-	docID := p.ByName("documentNumber")
+	docID := p.ByName("id")
 
 	_, err := validate(docID)
 	if err != nil {

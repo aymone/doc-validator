@@ -9,15 +9,15 @@ import (
 )
 
 type ValidateResponse struct {
-	DocumentNumber string `json:"documentNumber"`
-	IsValid        bool   `json:"isValid"`
-	Variety        string `json:"type"`
+	ID      string `json:"id"`
+	IsValid bool   `json:"isValid"`
+	Variety string `json:"type"`
 }
 
 func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 
-	docID := p.ByName("documentNumber")
+	docID := p.ByName("id")
 	c, err := validate(docID)
 	if err != nil {
 		log.Println("Error on validate responses:")
@@ -27,9 +27,9 @@ func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, p httproute
 	}
 
 	v := ValidateResponse{
-		DocumentNumber: c.input,
-		Variety:        c.variety,
-		IsValid:        true,
+		ID:      c.input,
+		Variety: c.variety,
+		IsValid: true,
 	}
 
 	if err := json.NewEncoder(w).Encode(v); err != nil {

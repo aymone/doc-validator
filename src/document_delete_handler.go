@@ -9,7 +9,7 @@ import (
 
 func DocumentDeleteHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
-	docID := p.ByName("documentNumber")
+	docID := p.ByName("id")
 
 	if err := getClient().C("documents").RemoveId(docID); err != nil {
 		log.Println(err.Error())
