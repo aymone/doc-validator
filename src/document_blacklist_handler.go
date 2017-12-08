@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 
@@ -22,15 +21,26 @@ func DocumentBlacklistHandler(w http.ResponseWriter, r *http.Request, p httprout
 	}
 
 	var doc document
-	if err := doc.blacklist(docID, docStatus); err != nil {
-		log.Println(err.Error())
-		http.Error(w, "Error on update document", http.StatusBadRequest)
+	findErr := getClient().C("documents").FindId(docID).One(&doc)
+	if findErr != nil {
+		log.Println(findErr)
+		http.Error(w, findErr.Error(), http.StatusNotFound)
 		return
 	}
 
-	if err := json.NewEncoder(w).Encode(doc); err != nil {
-		log.Println("Error on encode responses")
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	statusErr := doc.setStatus(docStatus)
+	if statusErr != nil {
+		log.Println(statusErr)
+		http.Error(w, statusErr.Error(), http.StatusBadRequest)
 		return
 	}
+
+	updateErr := getClient().C("documents").UpdateId(docID, &doc)
+	if updateErr != nil {
+		log.Println(updateErr)
+		http.Error(w, updateErr.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }

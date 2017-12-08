@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// document represents mongodb collection model
 type document struct {
 	ID          string    `bson:"_id,omitempty" json:"documentNumber"`
 	Variety     string    `bson:"variety" json:"variety"`
@@ -13,16 +14,8 @@ type document struct {
 	UpdatedAt   time.Time `bson:"updatedAt" json:"updatedAt"`
 }
 
-func (d *document) create() error {
-	return getClient().C("documents").Insert(&d)
-}
-
-func (d *document) blacklist(ID string, status string) error {
-	err := getClient().C("documents").FindId(ID).One(&d)
-	if err != nil {
-		return err
-	}
-
+// set status update document status and updatedAt field
+func (d *document) setStatus(status string) error {
 	switch status {
 	case "add":
 		d.Blacklisted = true
@@ -34,7 +27,13 @@ func (d *document) blacklist(ID string, status string) error {
 		return errors.New("Invalid Status, valid:add/remove")
 	}
 
-	return getClient().C("documents").UpdateId(d.ID, &d)
+	d.UpdatedAt = time.Now()
+
+	return nil
+}
+
+func (d *document) create() error {
+	return getClient().C("documents").Insert(&d)
 }
 
 func (d *document) read() error {
