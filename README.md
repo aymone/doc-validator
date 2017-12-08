@@ -1,4 +1,4 @@
-# Document Validator
+# Document Validator [![Build Status](https://travis-ci.org/aymone/doc-validator.svg?branch=master)](https://travis-ci.org/aymone/doc-validator)
 
 ## Getting Started
 

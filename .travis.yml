@@ -1,0 +1,11 @@
+language:
+  - none
+
+services:
+  - docker
+
+before_install:
+  - make install
+
+script:
+  - make full-test
