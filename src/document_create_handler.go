@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
@@ -39,12 +40,18 @@ func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 
 	if err := doc.create(); err != nil {
 		log.Println(err.Error())
-		http.Error(w, "Error on save new document", http.StatusInternalServerError)
+		// Errors from go-mgo client not return status codes :/
+		if strings.Contains(err.Error(), "E11000 duplicate") {
+			http.Error(w, "Duplicated document number", http.StatusConflict)
+			return
+		}
+
+		http.Error(w, "Error on save new document number", http.StatusInternalServerError)
 		return
 	}
 
 	if err := json.NewEncoder(w).Encode(doc); err != nil {
-		log.Println("Error on encode responses")
+		log.Println("Error on encode response")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
