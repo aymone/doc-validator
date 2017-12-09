@@ -74,7 +74,6 @@
     }
 
     function create() {
-      console.log(vm.input);
       const document = {id: vm.input};
       return documentsService.validate(document.id)
         .then(() => documentsService.create(document))
