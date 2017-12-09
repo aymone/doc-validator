@@ -1,0 +1,13 @@
+<div class="controllers">
+    <form name="documentForm">
+    <input type="text"
+        name="filter"
+        ng-model="vm.input"
+        ng-change="vm.get()"
+        angular-mask="000.000.000-00|00.000.000/0000-00"
+        ng-class="{'invalid-text': !vm.valid && documentForm.filter.$dirty}">
+
+        <input type="button" value="Clear" ng-click="vm.cleanFilter()">
+        <input type="button" value="Create" ng-click="vm.create()">
+    </form>
+</div>

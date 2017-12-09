@@ -1,0 +1,52 @@
+<div>
+  <table>
+    <tr>
+      <thead>
+        <th>
+          <a ng-click="vm.setSorter('blacklisted')" href="">
+            Blacklisted
+          </a>
+        </th>
+        <th>
+          <a ng-click="vm.setSorter('id')" href="">
+            Document number
+          </a>
+        </th>
+        <th>
+          <a ng-click="vm.setSorter('variety')" href="">
+            Document variety
+          </a>
+        </th>
+        <th>
+          <a ng-click="vm.setSorter('createdAt')" href="">
+            CreatedAt
+          </a>
+        </th>
+        <th>
+          <a ng-click="vm.setSorter('updatedAt')" href="">
+            UpdatedAt
+          </a>
+        </th>
+        <th>Delete</th>
+      </thead>
+    </tr>
+    <tr>
+      <tbody ng-repeat="d in vm.documents | filter:vm.input">
+        <td>
+          <input type="checkbox"
+                  ng-change="vm.blacklist(d.id, d.blacklisted)"
+                  ng-model="d.blacklisted" />
+        </td>
+        <td>{{d.id}}</td>
+        <td>{{d.variety}}</td>
+        <td>{{d.createdAt}}</td>
+        <td>{{d.updatedAt}}</td>
+        <td>
+            <button type="button" ng-click="vm.del(d.id)">
+                X
+            </button>
+        </td>
+      </tbody>
+    </tr>
+  </table>
+</div>
