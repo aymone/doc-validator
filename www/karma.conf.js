@@ -7,7 +7,9 @@ module.exports = function(config) {
       './../bower_components/angular-mocks/angular-mocks.js',
       './../bower_components/angular-input-mask/src/angular-simple-mask.js',
       './app.js',
-      './app-test.js'
+      './services/documents.service.js',
+      './app-test.js',
+      './services/documents.service-test.js'
     ],
 
     autoWatch: true,
