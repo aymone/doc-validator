@@ -7,13 +7,19 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
+// client is a global var to store one instance from mongodb client
 var client *mgo.Database
 
+// connectionConfig is the context to run client
+// host are the mongodb address
+// dbName are the mongodb database
 type connectionConfig struct {
 	host   string
 	dbName string
 }
 
+// getConnectionConfig read config from env
+// This env vars are defined in host container
 func getConnectionConfig() connectionConfig {
 	host, exist := os.LookupEnv("APP_MONGO_HOST")
 	if !exist {
@@ -38,6 +44,9 @@ func getConnectionConfig() connectionConfig {
 	return c
 }
 
+// getClient returns mongoDb client.
+// If already defined, return the same instance
+// if not, create a new one.
 func getClient() *mgo.Database {
 	if client != nil {
 		return client
