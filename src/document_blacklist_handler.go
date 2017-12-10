@@ -6,6 +6,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// DocumentBlacklistHandler will handle blacklist requests.
+// Before try to exclude any document,
+// validator will be called and return error if document number is not valid.
+// Theres also error codes related with item update.
 func DocumentBlacklistHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 

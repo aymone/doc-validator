@@ -9,6 +9,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// DocumentCreateHandler will handle create requests.
+// Before try to create any document,
+// validator will be called and return error if document number is not valid.
+// Theres also error codes related with item create.
 func DocumentCreateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	serverInfo.setCounter()
 

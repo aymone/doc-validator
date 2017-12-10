@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// documentRequest has the struct for common document number requests.
 type documentRequest struct {
 	ID string `json:"id"`
 }
@@ -18,7 +19,7 @@ type document struct {
 	UpdatedAt   time.Time `bson:"updatedAt" json:"updatedAt"`
 }
 
-// set status update document status and updatedAt field
+// setStatus update document status and updatedAt field
 func (d *document) setStatus(status string) error {
 	switch status {
 	case "add":

@@ -6,6 +6,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// DocumentDeleteHandler will handle delete requests.
+// Return error if document not found.
 func DocumentDeleteHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 	docID := p.ByName("id")

@@ -7,12 +7,16 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// ValidateResponse has the struct for response body.
+// Returns ID, if document is valid and document variety
 type ValidateResponse struct {
 	ID      string `json:"id"`
 	IsValid bool   `json:"isValid"`
 	Variety string `json:"type"`
 }
 
+// DocumentValidateHandler will handle validate document number requests.
+// Errors can be returned if document is not valid or cannot encode response.
 func DocumentValidateHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 
