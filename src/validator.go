@@ -60,6 +60,7 @@ func (v *validatorContext) calculateNumbersAndDigits() error {
 	totalSum := 0
 	baseIndex := v.size - 2
 
+	// iterate over input and generate the numbers to sum
 	for i, char := range v.input {
 		strNum := fmt.Sprintf("%c", char)
 		intNum, conversionErr := strconv.Atoi(strNum)
@@ -67,11 +68,13 @@ func (v *validatorContext) calculateNumbersAndDigits() error {
 			return errors.New("Invalid conversion number")
 		}
 
+		// calculate input item * mask
 		if i < baseIndex {
 			v.numbers = append(v.numbers, intNum)
 			totalSum += intNum * v.mask[i]
 		}
 
+		// calculate numbers x masks withous digits
 		if i == baseIndex {
 			module := totalSum % 11
 
@@ -81,27 +84,31 @@ func (v *validatorContext) calculateNumbersAndDigits() error {
 				v.digits = append(v.digits, (11 - module))
 			}
 
+			// validate calculated 1st digit with input
 			if v.digits[0] != intNum {
 				return errors.New("Invalid number")
 			}
 		}
-
+		// add 1st digit to number list
 		if i >= baseIndex {
 			v.numbers = append(v.numbers, intNum)
 		}
 	}
 
+	// add new item on mask to sum all numbers in list again
 	index := v.mask[0] + 1
 	v.mask = append([]int{index}, v.mask...)
 	totalSum = 0
 	baseIndex++
 
+	// sum all numbers, including 1st digit
 	for i, num := range v.numbers {
 		if i < baseIndex {
 			totalSum += num * v.mask[i]
 		}
 	}
 
+	// calculate module for 2nd digit
 	module := totalSum % 11
 	if module < 2 {
 		v.digits = append(v.digits, 0)
@@ -109,10 +116,12 @@ func (v *validatorContext) calculateNumbersAndDigits() error {
 		v.digits = append(v.digits, (11 - module))
 	}
 
+	// validate 2nd digit with input
 	if v.digits[1] != v.numbers[baseIndex] {
 		return errors.New("Invalid number")
 	}
 
+	// no errors
 	return nil
 }
 

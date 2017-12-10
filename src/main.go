@@ -9,7 +9,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// serverInfo instantiate application server info
 var serverInfo *ServerInfo
+
+// log instantiante application logger
 var log *logrus.Logger
 
 func main() {
@@ -33,6 +36,7 @@ func main() {
 	}
 }
 
+// requestHandler set the default headers for application
 func requestHandler(h http.Handler) http.Handler {
 	allowedCorsHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding"
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -47,6 +51,7 @@ func requestHandler(h http.Handler) http.Handler {
 	})
 }
 
+// router has the application routes and handlers
 func router() *httprouter.Router {
 	router := httprouter.New()
 	router.GET("/status", ServerStatusHandler)

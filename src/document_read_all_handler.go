@@ -8,6 +8,9 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// DocumentReadAllHandler will handle read all requests.
+// This handler accepts requests with filter or sorters.
+// Errors can be returned if document not found or cannot encode response.
 func DocumentReadAllHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	serverInfo.setCounter()
 

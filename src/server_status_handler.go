@@ -7,12 +7,14 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// ServerStatus has the response body for ServerStatusHandler
 type ServerStatus struct {
 	StartedAt string `json:"startedAt"`
 	Uptime    string `json:"uptime"`
 	Requests  int    `json:"requests"`
 }
 
+// ServerStatusHandler handle server info, can return errors on encode response
 func ServerStatusHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	serverInfo.setCounter()
 

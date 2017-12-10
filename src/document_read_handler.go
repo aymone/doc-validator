@@ -7,6 +7,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// DocumentReadHandler will handle read one requests.
+// Errors can be returned if document not found or cannot encode response.
 func DocumentReadHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	serverInfo.setCounter()
 
