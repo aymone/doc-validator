@@ -30,6 +30,14 @@ test:
 docker-test-acceptance:
 	docker-compose exec app go test -v -tags=acceptance
 
+.PHONY: client-watch
+client-watch:
+	npm --prefix ./www run test
+
+.PHONY: client-test
+client-test:
+	npm --prefix ./www run test-single-run
+
 .PHONY: full-test
 full-test: docker-test-acceptance
 	npm --prefix ./www run test-single-run
