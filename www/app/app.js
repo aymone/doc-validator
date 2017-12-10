@@ -1,13 +1,13 @@
 (function (angular) {
-  'use strict';
+    'use strict';
 
-  // Declare app level module which depends on views, and components
-  angular
+// Declare app level module which depends on views, and components
+angular
     .module('App', ['angularMask'])
     .controller('AppController', AppController);
 
-  AppController.$inject = ['documentsService'];
-  function AppController(documentsService) {
+AppController.$inject = ['documentsService'];
+function AppController(documentsService) {
     // bind scope
     let vm = this;
 
@@ -26,60 +26,60 @@
     vm.setSorter = setSorter;
 
     function cleanFilter() {
-      vm.input = ""
-      vm.sorter = ""
-      get();
+        vm.input = ""
+        vm.sorter = ""
+        get();
     }
 
     function get() {
-      const query = {};
-      if (vm.input) {
-        query.filter = vm.input
-      }
+        const query = {};
+        if (vm.input) {
+            query.filter = vm.input
+        }
 
-      if (vm.sorter) {
-        query.sorter = vm.sorter
-      }
+        if (vm.sorter) {
+            query.sorter = vm.sorter
+        }
 
-      return documentsService.validate(vm.input)
-        .then(response => {
-            vm.valid = response.data.isValid;
-        })
-        .catch(() => {
-          vm.valid = false
-        })
-        .then(() => documentsService.getAll(query))
-        .then(response => {
-          vm.documents = response.data;
-        });
+        return documentsService.validate(vm.input)
+          .then(response => {
+              vm.valid = response.data.isValid;
+          })
+          .catch(() => {
+              vm.valid = false
+          })
+          .then(() => documentsService.getAll(query))
+          .then(response => {
+              vm.documents = response.data;
+          });
     }
 
     function setSorter(sorter) {
-      if (vm.sorter === sorter) {
-        sorter = `-${sorter}`;
-      }
+        if (vm.sorter === sorter) {
+            sorter = `-${sorter}`;
+        }
 
-      vm.sorter = sorter;
-      get();
+        vm.sorter = sorter;
+        get();
     }
 
     function blacklist(id, isBlackListed) {
-      return documentsService.blacklist(id, !isBlackListed);
+        return documentsService.blacklist(id, !isBlackListed);
     }
 
     function del(id) {
-      return documentsService.del(id)
-        .then(()=> get());
+        return documentsService.del(id)
+            .then(()=> get());
     }
 
     function create() {
-      const document = {id: vm.input};
-      return documentsService.validate(document.id)
-        .then(() => documentsService.create(document))
-        .then(() => get());
+        const document = {id: vm.input};
+        return documentsService.validate(document.id)
+            .then(() => documentsService.create(document))
+            .then(() => get());
     }
 
     get();
-  }
+}
 
 })(angular);
