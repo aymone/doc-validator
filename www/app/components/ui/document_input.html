@@ -1,13 +1,23 @@
-<div class="controllers">
-    <form name="documentForm">
-    <input type="text"
-        name="filter"
-        ng-model="vm.input"
-        ng-change="vm.get()"
-        angular-mask="000.000.000-00|00.000.000/0000-00"
-        ng-class="{'invalid-text': !vm.valid && documentForm.filter.$dirty}">
+<form name="documentForm" layout-padding>
+    <div layout="row" flex flex-offset="5">
+        <md-input-container flex="20" class="md-icon-float md-block md-title">
+            <label>Document number</label>
+            <input type="text"
+                name="filter"
+                ng-model="vm.input"
+                ng-change="vm.get()"
+                angular-mask="000.000.000-00|00.000.000/0000-00"
+                ng-class="{'invalid-text': !vm.valid && documentForm.filter.$dirty}"
+                required>
 
-        <input type="button" value="Clear" ng-click="vm.cleanFilter()">
-        <input type="button" value="Create" ng-click="vm.create()">
-    </form>
-</div>
+            <div ng-messages="documentForm.filter.$error">
+                <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
+            </div>
+        </md-input-container>
+
+        <div>
+            <md-button class="md-raised" ng-click="vm.cleanFilter()">Clear</md-button>
+            <md-button class="md-raised md-primary" ng-click="vm.create()">Create</md-button>
+        </div>
+    </div>
+</form>

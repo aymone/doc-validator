@@ -3,16 +3,16 @@
 
 // Declare app level module which depends on views, and components
 angular
-    .module('App', ['angularMask'])
+    .module('App', ['angularMask', 'ngMaterial', 'ngMessages'])
     .controller('AppController', AppController);
 
-AppController.$inject = ['documentsService'];
-function AppController(documentsService) {
+AppController.$inject = ['documentsService', '$mdToast'];
+function AppController(documentsService, $mdToast) {
     // bind scope
     let vm = this;
 
     // bind variables
-    vm.valid = false;
+    vm.valid = true;
     vm.input = "";
     vm.sorter = "";
     vm.documents = [];
@@ -24,6 +24,14 @@ function AppController(documentsService) {
     vm.blacklist = blacklist;
     vm.cleanFilter = cleanFilter;
     vm.setSorter = setSorter;
+
+    function sendToast(message) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(message)
+                .hideDelay(3000)
+        );
+    };
 
     function cleanFilter() {
         vm.input = ""
@@ -42,16 +50,16 @@ function AppController(documentsService) {
         }
 
         return documentsService.validate(vm.input)
-          .then(response => {
-              vm.valid = response.data.isValid;
-          })
-          .catch(() => {
-              vm.valid = false
-          })
-          .then(() => documentsService.getAll(query))
-          .then(response => {
-              vm.documents = response.data;
-          });
+            .then(() => {
+                vm.valid = true;
+            })
+            .catch(() => {
+                vm.valid = false;
+            })
+            .then(() => documentsService.getAll(query))
+            .then(response => {
+                vm.documents = response.data;
+            });
     }
 
     function setSorter(sorter) {
@@ -76,6 +84,14 @@ function AppController(documentsService) {
         const document = {id: vm.input};
         return documentsService.validate(document.id)
             .then(() => documentsService.create(document))
+            .then(() => {
+                sendToast('Document number created with success.')
+            })
+            .catch(err => {
+                if (err.status === 409) {
+                    sendToast('Document number already exists.')
+                }
+            })
             .then(() => get());
     }
 
