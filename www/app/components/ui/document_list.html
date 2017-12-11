@@ -1,4 +1,5 @@
-<div>
+<div layout layout-padding>
+  <div layout="row" flex flex-offset="5">
   <table>
     <tr>
       <thead>
@@ -33,20 +34,24 @@
     <tr>
       <tbody ng-repeat="d in vm.documents | filter:vm.input">
         <td>
-          <input type="checkbox"
-                  ng-change="vm.blacklist(d.id, d.blacklisted)"
-                  ng-model="d.blacklisted" />
+          <md-checkbox
+            class="md-secondary"
+            ng-model="d.blacklisted"
+            ng-change="vm.blacklist(d.id, d.blacklisted)"
+          >
+          </md-checkbox>
         </td>
         <td>{{d.id}}</td>
         <td>{{d.variety}}</td>
         <td>{{d.createdAt}}</td>
         <td>{{d.updatedAt}}</td>
         <td>
-            <button type="button" ng-click="vm.del(d.id)">
-                X
-            </button>
+            <md-button class="md-raised md-warn" ng-click="vm.del(d.id)">
+               x
+            </md-button>
         </td>
       </tbody>
     </tr>
   </table>
+  </div>
 </div>

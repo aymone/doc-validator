@@ -1,17 +1,3 @@
-div.container {
-  margin-top: 100px;
-  margin-bottom: 100px;
-  margin-right: 150px;
-  margin-left: 80px;
-}
-
-div.controllers {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  margin-right: 0px;
-  margin-left: 0px;
-}
-
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -33,14 +19,6 @@ td {
 }
 
 input[type=text].invalid-text {
-  background-color: rgb(236, 150, 169);
-  border: 1px solid red;
-  border-radius: 4px;
+  color: red;
+  border-bottom: 2px solid red;
 }
-
-input[type=text].valid-text {
-  background-color: rgb(180, 233, 128);
-  border: 1px solid greenyellow;
-  border-radius: 4px;
-}
-

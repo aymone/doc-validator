@@ -11,30 +11,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
   <link rel="stylesheet" href="app/app.css">
+  <!-- <link rel="stylesheet" href="app/app.css"> -->
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+  <body>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div ng-controller="AppController as vm" layout="column" ng-cloak class="md-inline-form">
+        <md-content>
+            <div layout layout-padding>
+                <div layout="row" flex flex-offset="5">
+                    <h1 class="md-display-2">Document validator</h1>
+                </div>
+            </div>
+            <document-input></document-input>
+            <document-list></document-list>
+        </md-content>
+    </div>
 
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src='bower_components/angular-input-mask/src/angular-simple-mask.js'></script>
 
-  <div ng-controller="AppController as vm" class="container">
-    <h1>Document validator</h1>
-    <document-input></document-input>
-    <document-list></document-list>
-  </div>
-
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src='bower_components/angular-input-mask/src/angular-simple-mask.js'></script>
-  <script src="app/app.js"></script>
-  <script src="app/services/documents.service.js"></script>
-  <script src="app/components/ui/document-input.directive.js"></script>
-  <script src="app/components/ui/document-list.directive.js"></script>
-</body>
+    <script src="app/app.js"></script>
+    <script src="app/services/documents.service.js"></script>
+    <script src="app/components/ui/document-input.directive.js"></script>
+    <script src="app/components/ui/document-list.directive.js"></script>
+  </body>
 </html>

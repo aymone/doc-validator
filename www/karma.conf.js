@@ -4,11 +4,15 @@ module.exports = function(config) {
     basePath: './app',
     files: [
       './../bower_components/angular/angular.js',
-      './../bower_components/angular-mocks/angular-mocks.js',
+      './../bower_components/angular-material/angular-material.js',
+      './../bower_components/angular-messages/angular-messages.js',
+      './../bower_components/angular-animate/angular-animate.min.js',
+      './../bower_components/angular-aria/angular-aria.js',
+      './../bower_components/angular-mocks.js',
       './../bower_components/angular-input-mask/src/angular-simple-mask.js',
       './app.js',
-      './services/documents.service.js',
       './app-test.js',
+      './services/documents.service.js',
       './services/documents.service-test.js'
     ],
 
